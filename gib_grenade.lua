@@ -16,7 +16,17 @@ local gibModels = {
         "models/gibs/gib8.mdl"
 }
 
+local functions = { 
+    player_onthrowgren2 = player_onthrowgren2,
+    player_onthrowgren1 = player_onthrowgren1,
+    precache = precache,
+}
+
 function precache()
+    if type(functions.precache) == "function" then
+		functions.precache()
+    end
+    
     PrecacheSound("Player.Scream")
 
     for i, gibModel in ipairs(gibModels) do
@@ -24,14 +34,22 @@ function precache()
     end
 end
 
-function player_onthrowgren2(playerID, time)
-    AddSchedule("screamer2", 0, TransformGrenadeRelay, playerID)
+function player_onthrowgren2(player, time)
+    if type(functions.player_onthrowgren2) == "function" then
+		functions.player_onthrowgren2(player, time)
+    end
+
+    AddSchedule("screamer2", 0, TransformGrenadeRelay, player)
 
     return true -- Lets keep on spammin'
 end
 
-function player_onthrowgren1(playerID, time)
-    AddSchedule("screamer", 0, TransformGrenadeRelay, playerID)
+function player_onthrowgren1(player, time)
+    if type(functions.player_onthrowgren1) == "function" then
+		functions.player_onthrowgren1(player, time)
+    end
+
+    AddSchedule("screamer", 0, TransformGrenadeRelay, player)
 
     return true
 end
@@ -49,9 +67,8 @@ end
 function TransformGrenade(player)
     local gren_col = Collection()
     local model = RandomGibModel()
-    local playerID = CastToPlayer(player)
         --Gets all grenades in a 64 unit radius of the player and change the model
-    gren_col:GetInSphere(playerID, 64, {  CF.kGrenades, CF.kTraceBlockWalls } )
+    gren_col:GetInSphere(CastToPlayer(player), 64, {  CF.kGrenades, CF.kTraceBlockWalls } )
     for temp in gren_col.items do
         --if the model is a head make it scream
         if model:find("head") ~= nil then
