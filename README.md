@@ -7,7 +7,7 @@ Put gib_grenade.lua into your "\FortressForever\maps\globalscripts\" folder.
 In your server console type "sv_globalluascript gib_grenade" to enable. Add it to you server config to keep it enabled.
 
 
-# Install with [Fortress Forever Game Rules](https://github.com/R00Ki3/ff-game-rules)
+# Or Install with [Fortress Forever Game Rules](https://github.com/R00Ki3/ff-game-rules)
 
 Put gib_grenade.lua into your "\FortressForever\maps\includes\" folder.
 
